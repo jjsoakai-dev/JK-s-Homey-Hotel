@@ -1,0 +1,45 @@
+/* @author jasminesoakai */
+
+package Hotel;
+
+public class Room {
+
+    private int roomNumber;
+    private String roomType;
+    private double pricePerNight;
+    private boolean isAvailable;
+
+    public Room(int roomNumber, String roomType, double pricePerNight) {
+        this.roomNumber = roomNumber;
+        this.roomType = roomType;
+        this.pricePerNight = pricePerNight;
+        this.isAvailable = true;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public double getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean status) {
+        this.isAvailable = status;
+    }
+
+    // Used by Hotel to match menu choice //
+    public boolean matchesType(int choice) {
+        return (choice == 1 && roomType.equalsIgnoreCase("Single")) ||
+               (choice == 2 && roomType.equalsIgnoreCase("Double")) ||
+               (choice == 3 && roomType.equalsIgnoreCase("King Suite"));
+    }
+}
