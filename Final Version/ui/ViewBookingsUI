@@ -1,0 +1,70 @@
+package ui;
+
+import dao.BookingDAO;
+import model.Customer;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+
+public class ViewBookingsUI {
+
+    private Customer customer;
+    private boolean isAdmin;
+
+    // Customer view
+    public ViewBookingsUI(Customer customer) {
+        this.customer = customer;
+        this.isAdmin = false;
+    }
+
+    // Admin view
+    public ViewBookingsUI() {
+        this.isAdmin = true;
+    }
+
+    public void show() {
+
+        JFrame frame = new JFrame("View Bookings");
+        frame.setSize(600, 350);
+        frame.setLayout(null);
+
+        String[] columns = {"ID", "Customer ID", "Room ID", "Check-In", "Check-Out"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(30, 30, 520, 180);
+
+        frame.add(scrollPane);
+
+        BookingDAO dao = new BookingDAO();
+        ArrayList<String[]> bookings;
+
+        if (isAdmin) {
+            bookings = dao.getAllBookings();
+        } else {
+            bookings = dao.getBookingsByCustomer(customer.getId());
+        }
+
+        for (String[] row : bookings) {
+            model.addRow(row);
+        }
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setBounds(240, 240, 100, 30);
+        frame.add(backBtn);
+
+        backBtn.addActionListener(e -> {
+            frame.dispose();
+
+            if (isAdmin) {
+                new AdminDashboard().show();
+            } else {
+                new CustomerDashboard(customer).show();
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}
