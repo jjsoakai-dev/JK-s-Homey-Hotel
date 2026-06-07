@@ -1,0 +1,88 @@
+package ui;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import dao.CustomerDAO;
+import model.Customer;
+import util.DatabaseInit;
+
+public class LoginUI {
+
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("JK's Homey Hotel 2 - Login");
+        frame.setSize(350, 250);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel title = new JLabel("Login");
+        title.setBounds(140, 10, 100, 30);
+        frame.add(title);
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailLabel.setBounds(30, 50, 80, 25);
+        frame.add(emailLabel);
+
+        JTextField emailField = new JTextField();
+        emailField.setBounds(120, 50, 170, 25);
+        frame.add(emailField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(30, 90, 80, 25);
+        frame.add(passwordLabel);
+
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(120, 90, 170, 25);
+        frame.add(passwordField);
+
+        JButton loginButton = new JButton("Login");
+        loginButton.setBounds(120, 130, 100, 30);
+        frame.add(loginButton);
+
+        JLabel messageLabel = new JLabel("");
+        messageLabel.setBounds(30, 170, 250, 25);
+        frame.add(messageLabel);
+
+        // Temporary login logic (we connect DB next)
+        loginButton.addActionListener(e -> {
+
+    String email = emailField.getText();
+    String password = new String(passwordField.getPassword());
+
+    CustomerDAO dao = new CustomerDAO();
+    Customer user = dao.login(email, password);
+
+    if (user != null) {
+
+        messageLabel.setText("Welcome " + user.getName());
+
+        // Check role
+        if (user.getRole().equals("ADMIN")) {
+
+    JOptionPane.showMessageDialog(null, "Admin Login Success");
+
+    frame.dispose(); // close login window
+
+    AdminDashboard admin = new AdminDashboard();
+    admin.show();
+}
+ else {
+
+    JOptionPane.showMessageDialog(null, "Customer Login Success");
+
+    frame.dispose();
+
+    CustomerDashboard dashboard = new CustomerDashboard(user);
+    dashboard.show();
+}
+
+    } else {
+        messageLabel.setText("Invalid login");
+    }
+});
+
+
+        frame.setVisible(true);
+    }
+}
