@@ -1,0 +1,19 @@
+stmt.executeUpdate(
+    "INSERT INTO rooms (room_number, room_type, price, available) VALUES " +
+    "(101, 'Single', 100, true)"
+);
+
+stmt.executeUpdate(
+    "INSERT INTO rooms (room_number, room_type, price, available) VALUES " +
+    "(102, 'Single', 100, true)"
+);
+
+stmt.executeUpdate(
+    "INSERT INTO rooms (room_number, room_type, price, available) VALUES " +
+    "(201, 'Double', 180, true)"
+);
+
+stmt.executeUpdate(
+    "INSERT INTO rooms (room_number, room_type, price, available) VALUES " +
+    "(301, 'King Suite', 300, true)"
+);
