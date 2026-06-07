@@ -1,0 +1,72 @@
+package ui;
+
+import javax.swing.*;
+import model.Customer;
+
+public class CustomerDetailsUI {
+
+    private Customer customer;
+
+    public CustomerDetailsUI(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void show() {
+        JFrame frame = new JFrame("Customer Personal Details");
+        frame.setSize(400, 350);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel titleLabel = new JLabel("Personal Details");
+        titleLabel.setBounds(130, 20, 200, 30);
+        frame.add(titleLabel);
+
+        JLabel idLabel = new JLabel("Customer ID: " + customer.getId());
+        idLabel.setBounds(80, 60, 250, 25);
+        frame.add(idLabel);
+
+        // Editable fields
+        JTextField nameField = new JTextField(customer.getName());
+        nameField.setBounds(120, 100, 180, 25);
+        frame.add(new JLabel("Name:")).setBounds(50, 100, 70, 25);
+        frame.add(nameField);
+
+        JTextField emailField = new JTextField(customer.getEmail());
+        emailField.setBounds(120, 130, 180, 25);
+        frame.add(new JLabel("Email:")).setBounds(50, 130, 70, 25);
+        frame.add(emailField);
+
+        JTextField phoneField = new JTextField(customer.getPhone());
+        phoneField.setBounds(120, 160, 180, 25);
+        frame.add(new JLabel("Phone:")).setBounds(50, 160, 70, 25);
+        frame.add(phoneField);
+
+        // Save button
+        JButton saveButton = new JButton("Save");
+        saveButton.setBounds(80, 210, 100, 30);
+        frame.add(saveButton);
+
+        // Back button
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(200, 210, 100, 30);
+        frame.add(backButton);
+
+        // Save logic
+        saveButton.addActionListener(e -> {
+            customer.setName(nameField.getText());
+            customer.setEmail(emailField.getText());
+            customer.setPhone(phoneField.getText());
+
+            JOptionPane.showMessageDialog(frame, "Details updated successfully!");
+        });
+
+        // Back logic
+        backButton.addActionListener(e -> {
+            CustomerDashboard dashboard = new CustomerDashboard(customer);
+            dashboard.show();
+            frame.dispose();
+        });
+
+        frame.setVisible(true);
+    }
+}
