@@ -1,0 +1,15 @@
+//New GUI --> DAO
+
+bookButton.setOnAction(e -> {
+
+    Booking booking = new Booking(
+        currentUserId,
+        selectedRoomId,
+        checkInDate.getValue(),
+        checkOutDate.getValue()
+    );
+
+    BookingDAO dao = new BookingDAO();
+    dao.addBooking(booking);
+
+});
