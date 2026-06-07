@@ -1,0 +1,55 @@
+package ui;
+
+import dao.CustomerDAO;
+import Hotel.Customer;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class LoginUI extends Application {
+
+    @Override
+    public void start(Stage stage) {
+
+        TextField email = new TextField();
+        email.setPromptText("Email");
+
+        PasswordField password = new PasswordField();
+        password.setPromptText("Password");
+
+        Button loginBtn = new Button("Login");
+        Label message = new Label();
+
+        loginBtn.setOnAction(e -> {
+
+            CustomerDAO dao = new CustomerDAO();
+            Customer user = dao.login(email.getText(), password.getText());
+
+            if (user != null) {
+                message.setText("Welcome " + user.getName());
+
+                if (user.getRole().equals("ADMIN")) {
+                    System.out.println("Open Admin Dashboard");
+                } else {
+                    System.out.println("Open Customer Dashboard");
+                }
+
+            } else {
+                message.setText("Invalid login");
+            }
+        });
+
+        VBox root = new VBox(10, email, password, loginBtn, message);
+
+        Scene scene = new Scene(root, 300, 200);
+        stage.setScene(scene);
+        stage.setTitle("Hotel Login");
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
