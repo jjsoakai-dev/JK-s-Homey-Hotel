@@ -1,0 +1,98 @@
+package util;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class DatabaseInit {
+
+    public static void initialize() {
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            Statement stmt = conn.createStatement();
+
+            //  USERS TABLE
+            try {
+                stmt.executeUpdate(
+                    "CREATE TABLE users (" +
+                    "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
+                    "name VARCHAR(100), " +
+                    "email VARCHAR(100), " +
+                    "phone VARCHAR(20), " +
+                    "password VARCHAR(100), " +
+                    "role VARCHAR(20))"
+                );
+                System.out.println("Users table created");
+            } catch (Exception e) {
+                System.out.println("Users table exists");
+            }
+
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM users");
+            rs.next();
+
+            if (rs.getInt(1) == 0) {
+
+                stmt.executeUpdate(
+                    "INSERT INTO users(name, email, phone, password, role) VALUES " +
+                    "('Admin','admin@test.com','000','admin123','ADMIN')"
+                );
+
+                stmt.executeUpdate(
+                    "INSERT INTO users(name, email, phone, password, role) VALUES " +
+                    "('John','john@test.com','111','1234','CUSTOMER')"
+                );
+
+                System.out.println("Default users inserted");
+            }
+
+            // ROOMS TABLE
+            try {
+                stmt.executeUpdate(
+                    "CREATE TABLE rooms (" +
+                    "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
+                    "room_number INT, " +
+                    "room_type VARCHAR(50), " +
+                    "price DOUBLE, " +
+                    "available BOOLEAN)"
+                );
+                System.out.println("Rooms table created");
+            } catch (Exception e) {
+                System.out.println("Rooms table exists");
+            }
+
+            rs = stmt.executeQuery("SELECT COUNT(*) FROM rooms");
+            rs.next();
+
+            if (rs.getInt(1) == 0) {
+
+                stmt.executeUpdate("INSERT INTO rooms VALUES (DEFAULT,101,'Single',100,true)");
+                stmt.executeUpdate("INSERT INTO rooms VALUES (DEFAULT,102,'Single',100,true)");
+                stmt.executeUpdate("INSERT INTO rooms VALUES (DEFAULT,201,'Double',180,true)");
+                stmt.executeUpdate("INSERT INTO rooms VALUES (DEFAULT,301,'King Suite',300,true)");
+
+                System.out.println(" Default rooms inserted");
+            }
+
+            // BOOKINGS TABLE
+            try {
+                stmt.executeUpdate(
+                    "CREATE TABLE bookings (" +
+                    "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY, " +
+                    "customer_id INT, " +
+                    "room_id INT, " +
+                    "check_in DATE, " +
+                    "check_out DATE)"
+                );
+                System.out.println("Bookings table created");
+            } catch (Exception e) {
+                System.out.println("Bookings table exists");
+            }
+
+            System.out.println("Database ready!");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
