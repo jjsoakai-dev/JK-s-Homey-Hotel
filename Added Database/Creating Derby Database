@@ -1,0 +1,17 @@
+//Singleton 
+
+package util;
+
+import java.sql.*;
+
+public class DBConnection {
+
+    private static Connection conn;
+
+    public static Connection getInstance() throws SQLException {
+        if (conn == null || conn.isClosed()) {
+            conn = DriverManager.getConnection("jdbc:derby:hotelDB;create=true");
+        }
+        return conn;
+    }
+}
