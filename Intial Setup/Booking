@@ -1,0 +1,40 @@
+/* @author jasminesoakai */
+
+package Hotel;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+public class Booking {
+
+    private Customer customer;
+    private Room room;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
+    private long nights;
+
+    public Booking(Customer customer, Room room, LocalDate checkInDate, LocalDate checkOutDate) {
+        this.customer = customer;
+        this.room = room;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.nights = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+    }
+
+    public double getTotalCost() {
+        return nights * room.getPricePerNight();
+    }
+
+    public void displayBooking() {
+        System.out.println("\n=== Booking Details ===");
+        System.out.println("Guest Name: " + customer.getName());
+        System.out.println("Email: " + customer.getEmail());
+        System.out.println("Phone: " + customer.getPhone());
+        System.out.println("Room Number: " + room.getRoomNumber());
+        System.out.println("Room Type: " + room.getRoomType());
+        System.out.println("Check-in Date: " + checkInDate);
+        System.out.println("Check-out Date: " + checkOutDate);
+        System.out.println("Number of Nights: " + nights);
+        System.out.println("Total Cost: $" + getTotalCost());
+    }
+}
