@@ -1,0 +1,39 @@
+//Room DAO
+
+package dao;
+
+import Hotel.Room;
+import util.DBConnection;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class RoomDAO {
+
+    public ArrayList<Room> getAvailableRooms() {
+
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        String sql = "SELECT * FROM rooms WHERE available=true";
+
+        try (Connection conn = DBConnection.getInstance();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                rooms.add(new Room(
+                    rs.getInt("room_number"),
+                    rs.getString("room_type"),
+                    rs.getDouble("price"),
+                    rs.getBoolean("available")
+                ));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rooms;
+    }
+}
