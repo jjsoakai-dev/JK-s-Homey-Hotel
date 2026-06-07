@@ -1,0 +1,61 @@
+package ui;
+
+import model.Customer;
+
+import javax.swing.*;
+
+public class BookingUI {
+
+    private Customer customer;
+
+    public BookingUI(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void show() {
+
+        JFrame frame = new JFrame("New Booking");
+        frame.setSize(400, 300);
+        frame.setLayout(null);
+
+        JLabel label = new JLabel("Create Booking for " + customer.getName());
+        label.setBounds(50, 20, 300, 30);
+        frame.add(label);
+
+        JLabel roomLabel = new JLabel("Room ID:");
+        roomLabel.setBounds(50, 80, 100, 25);
+        frame.add(roomLabel);
+
+        JTextField roomField = new JTextField();
+        roomField.setBounds(150, 80, 150, 25);
+        frame.add(roomField);
+
+        JLabel dateLabel = new JLabel("Check-In:");
+        dateLabel.setBounds(50, 120, 100, 25);
+        frame.add(dateLabel);
+
+        JTextField dateField = new JTextField("YYYY-MM-DD");
+        dateField.setBounds(150, 120, 150, 25);
+        frame.add(dateField);
+
+        JButton bookBtn = new JButton("Confirm Booking");
+        bookBtn.setBounds(120, 170, 150, 30);
+        frame.add(bookBtn);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setBounds(120, 210, 150, 30);
+        frame.add(backBtn);
+
+        // Booking action (you can connect DAO later)
+        bookBtn.addActionListener(e -> {
+            JOptionPane.showMessageDialog(frame, " Booking created (add DAO later)");
+        });
+
+        backBtn.addActionListener(e -> {
+            frame.dispose();
+            new CustomerDashboard(customer).show();
+        });
+
+        frame.setVisible(true);
+    }
+}
