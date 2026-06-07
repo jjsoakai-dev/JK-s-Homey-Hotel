@@ -1,0 +1,17 @@
+loginBtn.setOnAction(e -> {
+
+    CustomerDAO dao = new CustomerDAO();
+    Customer user = dao.login(email.getText(), password.getText());
+
+    if (user != null) {
+
+        if (user.getRole().equals("ADMIN")) {
+            new AdminDashboard().start(stage);
+        } else {
+            new CustomerDashboard(user).start(stage);
+        }
+
+    } else {
+        message.setText("Invalid login");
+    }
+});
