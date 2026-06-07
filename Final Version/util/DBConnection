@@ -1,0 +1,34 @@
+package util;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnection {
+
+    private static Connection connection;
+
+    public static Connection getConnection() throws SQLException {
+
+        try {
+            if (connection == null || connection.isClosed()) {
+
+                // Load Derby driver
+                Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+
+                // Create/connect DB
+                connection = DriverManager.getConnection(
+                        "jdbc:derby:hotelDB;create=true"
+                );
+
+                System.out.println("✅ Connected to DB");
+            }
+
+            return connection;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new SQLException("❌ Failed to connect to database");
+        }
+    }
+}
