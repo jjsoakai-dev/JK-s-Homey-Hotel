@@ -1,0 +1,15 @@
+package ui;
+
+import util.DatabaseInit;
+
+public class MainApp {
+
+    public static void main(String[] args) {
+
+        // Initialize DB ONCE
+        DatabaseInit.initialize();
+
+        // Launch login UI
+        LoginUI.main(args);
+    }
+}
