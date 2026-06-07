@@ -7,3 +7,7 @@ In the end, Swing was selected over JavaFX due to its native integration with Ja
 Logins for Admin Dashboard are: 
 Username: admin@test.com
 Password: admin123
+
+Logins for Customer Dashboard are: 
+Username: john@test.com
+Password: 1234
