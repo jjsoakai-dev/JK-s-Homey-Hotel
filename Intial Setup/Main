@@ -1,0 +1,113 @@
+/* @author jasminesoakai */
+
+package Hotel;
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Hotel hotel = new Hotel();
+
+        // Predefined rooms (system setup) //
+        hotel.addRoom(new Room(101, "Single", 100));
+        hotel.addRoom(new Room(102, "Single", 100));
+        hotel.addRoom(new Room(201, "Double", 180));
+        hotel.addRoom(new Room(202, "Double", 180));
+        hotel.addRoom(new Room(301, "King Suite", 300));
+
+        Scanner scanner = new Scanner(System.in);
+        int mainChoice;
+
+        do {
+            System.out.println("\n=== Hotel Booking System ===");
+            System.out.println("1. Customer Menu");
+            System.out.println("2. Admin Menu");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            mainChoice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (mainChoice) {
+                case 1:
+                    customerMenu(hotel, scanner);
+                    break;
+                case 2:
+                    adminMenu(hotel, scanner);
+                    break;
+                case 3:
+                    System.out.println("Thank you for using the Hotel Booking System!");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+
+        } while (mainChoice != 3);
+
+        scanner.close();
+    }
+
+    // CUSTOMER MENU //
+    
+    private static void customerMenu(Hotel hotel, Scanner scanner) {
+
+        int choice;
+
+        do {
+            System.out.println("\n=== Customer Menu ===");
+            System.out.println("1. Book a Room");
+            System.out.println("2. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); // clear buffer
+
+            switch (choice) {
+                case 1:
+                    hotel.bookRoom();
+                    break;
+                case 2:
+                    System.out.println("Returning to main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+
+        } while (choice != 2);
+    }
+
+    // ADMIN MENU //
+
+    private static void adminMenu(Hotel hotel, Scanner scanner) {
+
+        int choice;
+
+        do {
+            System.out.println("\n=== Admin Menu ===");
+            System.out.println("1. View All Bookings");
+            System.out.println("2. View Room Availability");
+            System.out.println("3. Back to Main Menu");
+            System.out.print("Enter your choice: ");
+
+            choice = scanner.nextInt();
+            scanner.nextLine(); 
+
+            switch (choice) {
+                case 1:
+                    hotel.viewAllBookings();
+                    break;
+                case 2:
+                    hotel.viewRoomAvailability();
+                    break;
+                case 3:
+                    System.out.println("Returning to main menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+
+        } while (choice != 3);
+    }
+}
