@@ -1,0 +1,18 @@
+//testing in order to see a window pop up --> to indicate functioning 
+package ui;
+
+import javax.swing.*;
+
+public class TestUI {
+    public static void main(String[] args) {
+
+        JFrame frame = new JFrame("JK's Homey Hotel 2");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JLabel label = new JLabel("Welcome to JK's Homey Hotel!", SwingConstants.CENTER);
+        frame.add(label);
+
+        frame.setVisible(true);
+    }
+}
