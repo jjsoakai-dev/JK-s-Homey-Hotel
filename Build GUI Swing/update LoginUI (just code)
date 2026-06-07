@@ -1,0 +1,29 @@
+//replacing loginButton.addActionListener(e -> with below code 
+
+loginButton.addActionListener(e -> {
+
+    String email = emailField.getText();
+    String password = new String(passwordField.getPassword());
+
+    CustomerDAO dao = new CustomerDAO();
+    Customer user = dao.login(email, password);
+
+    if (user != null) {
+
+        messageLabel.setText("Welcome " + user.getName());
+
+        // Check role
+        if (user.getRole().equals("ADMIN")) {
+            JOptionPane.showMessageDialog(null, "Admin Login Success");
+
+            // TODO: open admin dashboard
+        } else {
+            JOptionPane.showMessageDialog(null, "Customer Login Success");
+
+            // TODO: open customer dashboard
+        }
+
+    } else {
+        messageLabel.setText("Invalid login");
+    }
+});
