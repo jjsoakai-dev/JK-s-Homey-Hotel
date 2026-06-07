@@ -1,0 +1,66 @@
+package ui;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AdminDashboard {
+
+    public void show() {
+
+        JFrame frame = new JFrame("Admin Dashboard");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        // REMOVED DATABASE SHUTDOWN BLOCK (VERY IMPORTANT)
+
+        JLabel title = new JLabel("Admin Dashboard");
+        title.setBounds(130, 20, 200, 30);
+        frame.add(title);
+
+        // View Rooms button
+        JButton viewRoomsBtn = new JButton("View Rooms");
+        viewRoomsBtn.setBounds(120, 70, 150, 30);
+        frame.add(viewRoomsBtn);
+
+        // View Bookings button
+        JButton viewBookingsBtn = new JButton("View Bookings");
+        viewBookingsBtn.setBounds(120, 110, 150, 30);
+        frame.add(viewBookingsBtn);
+
+        //  NEW Logout button
+        JButton logoutBtn = new JButton("Logout");
+        logoutBtn.setBounds(120, 150, 150, 30);
+        frame.add(logoutBtn);
+
+        // Button actions
+        viewRoomsBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                ViewRoomsUI view = new ViewRoomsUI();
+                view.show();
+            }
+        });
+
+        viewBookingsBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                ViewBookingsUI view = new ViewBookingsUI();
+                view.show();
+            }
+        });
+
+        //  Logout action (THIS IS WHAT YOU WANTED)
+        logoutBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+                frame.dispose(); // close admin window
+
+                LoginUI.main(new String[]{}); // go back to login
+            }
+        });
+
+        frame.setVisible(true);
+    }
+}
