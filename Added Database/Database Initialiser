@@ -1,0 +1,45 @@
+package util;
+
+import java.sql.Connection;
+import java.sql.Statement;
+
+public class DatabaseInit {
+
+    public static void init() {
+
+        try (Connection conn = DBConnection.getInstance();
+             Statement stmt = conn.createStatement()) {
+
+            stmt.executeUpdate(
+                "CREATE TABLE users (" +
+                "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY," +
+                "name VARCHAR(100)," +
+                "email VARCHAR(100)," +
+                "phone VARCHAR(20)," +
+                "password VARCHAR(100)," +
+                "role VARCHAR(20))"
+            );
+
+            stmt.executeUpdate(
+                "CREATE TABLE rooms (" +
+                "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY," +
+                "room_number INT," +
+                "room_type VARCHAR(50)," +
+                "price DOUBLE," +
+                "available BOOLEAN)"
+            );
+
+            stmt.executeUpdate(
+                "CREATE TABLE bookings (" +
+                "id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY," +
+                "customer_id INT," +
+                "room_id INT," +
+                "check_in DATE," +
+                "check_out DATE)"
+            );
+
+        } catch (Exception e) {
+            // ignore if already exists
+        }
+    }
+}
