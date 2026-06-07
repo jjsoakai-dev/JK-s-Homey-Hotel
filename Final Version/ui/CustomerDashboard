@@ -1,0 +1,61 @@
+package ui;
+
+import javax.swing.*;
+import model.Customer;
+
+public class CustomerDashboard {
+
+    private Customer customer;
+
+    public CustomerDashboard(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void show() {
+
+        JFrame frame = new JFrame("Customer Dashboard");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(null);
+
+        JLabel welcomeLabel = new JLabel("Welcome " + customer.getName());
+        welcomeLabel.setBounds(120, 20, 200, 30);
+        frame.add(welcomeLabel);
+
+        // View Bookings (only this customer's)
+        JButton viewBookingsBtn = new JButton("My Bookings");
+        viewBookingsBtn.setBounds(120, 70, 150, 30);
+        frame.add(viewBookingsBtn);
+
+        // New Booking
+        JButton newBookingBtn = new JButton("New Booking");
+        newBookingBtn.setBounds(120, 110, 150, 30);
+        frame.add(newBookingBtn);
+
+        // Logout
+        JButton logoutBtn = new JButton("Logout");
+        logoutBtn.setBounds(120, 150, 150, 30);
+        frame.add(logoutBtn);
+
+        // BUTTON ACTIONS
+
+        viewBookingsBtn.addActionListener(e -> {
+            ViewBookingsUI view = new ViewBookingsUI(customer);
+            view.show();
+            frame.dispose();
+        });
+
+        newBookingBtn.addActionListener(e -> {
+            BookingUI booking = new BookingUI(customer);
+            booking.show();
+            frame.dispose();
+        });
+
+        logoutBtn.addActionListener(e -> {
+            frame.dispose();
+            LoginUI.main(new String[]{});
+        });
+
+        frame.setVisible(true);
+    }
+}
